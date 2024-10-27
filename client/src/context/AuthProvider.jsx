@@ -1,64 +1,43 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 
-const AuthContext = createContext(null);
+
+const AuthContext = createContext();
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 export const AuthProvider = ({ children }) => {
-  // Khởi tạo state với giá trị từ localStorage (nếu có)
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
-  
-  const [token, setToken] = useState(() => {
-    return localStorage.getItem('token') || null;
+  const [auth, setAuth] = useState(() => {
+    // Đọc từ localStorage một cách an toàn
+    const savedAuth = localStorage.getItem('auth');
+    return savedAuth ? JSON.parse(savedAuth) : null;
   });
 
-  // Cập nhật localStorage mỗi khi user hoặc token thay đổi
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user');
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (token) {
-      localStorage.setItem('token', token);
-    } else {
-      localStorage.removeItem('token');
-    }
-  }, [token]);
-
-  const login = (userData, authToken) => {
-    setUser(userData);
-    setToken(authToken);
+  const login = (userData) => {
+    setAuth(userData);
+    localStorage.setItem('auth', JSON.stringify(userData));
   };
 
   const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    setAuth(null);
+    localStorage.removeItem('auth');
   };
 
-  // Kiểm tra xem user đã đăng nhập chưa
   const isAuthenticated = () => {
-    return !!token;
+    return !!auth;
+  };
+
+  const value = {
+    auth,
+    login,
+    logout,
+    isAuthenticated
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-// Custom hook để sử dụng AuthContext
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
 };

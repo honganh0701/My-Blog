@@ -1,9 +1,20 @@
-import React from 'react'
+import { useAuth } from '../context/AuthProvider';
+import { Navigate } from 'react-router-dom';
 
-export default function Feed() {
+function Feed() {
+  const { isAuthenticated } = useAuth();
+
+  // Nếu chưa đăng nhập, redirect về trang login
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div>
-      Feed
+      <h1>Feed</h1>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </div>
-  )
+  );
 }
+
+export default Feed;

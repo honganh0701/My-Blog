@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '../api/authApi';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthProvider';
 
 function Login() {
     const navigate = useNavigate();
@@ -23,21 +23,25 @@ function Login() {
     };
     
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
-        
-        try {
-            const response = await authApi.login(formData);
-            login(response.user, response.token);
-            navigate('/feed');
-        } catch (err) {
-            setError(err.message || 'Đăng nhập thất bại!');
-        } finally {
-            setLoading(false);
-        }
-    };
-    
+      e.preventDefault();
+      setLoading(true);
+      setError('');
+      
+      try {
+          const response = await authApi.login(formData);
+          // Đảm bảo response chứa cả user và token
+          login({
+              user: response.user,
+              token: response.token
+          });
+          navigate('/feed');
+      } catch (err) {
+          setError(err.message || 'Đăng nhập thất bại!');
+      } finally {
+          setLoading(false);
+      }
+  };
+  
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
             <h2 className="text-2xl font-bold mb-6">Đăng nhập</h2>

@@ -57,5 +57,25 @@ export const authApi = {
                 throw new Error(error.message);
             }
         }
+    },
+
+    getCurrentUser: async () => {
+        try {
+          const token = localStorage.getItem('token');
+          if (!token) return null;
+      
+          const response = await api.get('/current-user', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          return response.data;
+        } catch (error) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          return null;
+        }
     }
+
+    
 };
