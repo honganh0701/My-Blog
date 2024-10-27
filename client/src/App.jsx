@@ -9,50 +9,41 @@ import Feed from "./pages/Feed";
 import Profile from "./pages/Profile";
 import PostDetail from "./pages/PostDetail";
 import Header from "./components/Header";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Component Protected Route
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  
-  if (!isAuthenticated()) {
-    return <Navigate to="/login" />;
-  }
-  
-  return children;
-};
-
 export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Header/>
+        <Header />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
-          <Route 
-            path="/feed" 
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route
+            path="/feed"
             element={
               <ProtectedRoute>
                 <Feed />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route 
-            path="/profile" 
+          <Route
+            path="/profile"
             element={
               <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/post-detail" 
+          <Route
+            path="/post/:id"
             element={
               <ProtectedRoute>
                 <PostDetail />
               </ProtectedRoute>
-            } 
+            }
           />
           <Route path="*" element={<div>404 - Không tìm thấy trang</div>} />
         </Routes>

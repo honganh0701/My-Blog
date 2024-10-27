@@ -20,10 +20,7 @@ const PostSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-    image: {
-        type: String,
-        default: ""
-    },
+    
     comments: [{
         userId: {
             type: mongoose.Schema.Types.ObjectId,
