@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { AuthProvider } from "./context/AuthContext";
 
 import Headers from "./components/Header";
 import Login from "./pages/Login";
@@ -12,6 +12,7 @@ import LandingPage from "./pages/LandingPage";
 function App() {
   
   return (
+    <AuthProvider>
     <BrowserRouter>
      
        <Headers/>
@@ -27,6 +28,7 @@ function App() {
       </Routes>
      
     </BrowserRouter>
+    </AuthProvider>
   )
 }
 

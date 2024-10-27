@@ -10,6 +10,20 @@ const api = axios.create({
     }
 });
 
+// Add interceptor để tự động thêm token vào header
+api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 export const authApi = {
     signup: async (userData) => {
         try {
