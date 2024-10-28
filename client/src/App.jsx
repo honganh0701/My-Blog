@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import PostDetail from "./pages/PostDetail";
 import Header from "./components/Header";
 import ProtectedRoute from "./components/ProtectedRoute";
+import CreatePost from "./pages/CreatePost";
 
 // Component Protected Route
 export default function App() {
@@ -37,6 +38,14 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+           path="/post/create"
+            element={
+           <ProtectedRoute>
+            <CreatePost />
+          </ProtectedRoute>
+         }
+  />
           <Route
             path="/post/:id"
             element={
