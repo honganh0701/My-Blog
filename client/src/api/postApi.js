@@ -60,3 +60,37 @@ export const getPosts = async () => {
         }
     }
 };
+
+export const updatePost = async (id, postData) => {
+    try {
+        const formData = new FormData();
+        Object.keys(postData).forEach(key => {
+            formData.append(key, postData[key]);
+        });
+
+        const response = await api.put(`/posts/${id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            throw error.response.data;
+        }
+        throw new Error('Có lỗi xảy ra khi cập nhật bài viết');
+    }
+};
+
+export const addComment = async (postId, content) => {
+    try {
+        const response = await api.post(`/posts/${postId}/comments`, { content });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            throw error.response.data;
+        }
+        throw new Error('Có lỗi xảy ra khi thêm bình luận');
+    }
+};

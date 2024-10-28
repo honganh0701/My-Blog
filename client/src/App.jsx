@@ -11,6 +11,7 @@ import PostDetail from "./pages/PostDetail";
 import Header from "./components/Header";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreatePost from "./pages/CreatePost";
+import EditPost from "./pages/EditPost";
 
 // Component Protected Route
 export default function App() {
@@ -51,6 +52,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <PostDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/post/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditPost />
               </ProtectedRoute>
             }
           />

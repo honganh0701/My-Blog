@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPost, getPosts, getPost } from '../controllers/postController.js';
+import { createPost, getPosts, getPost, updatePost, addComment } from '../controllers/postController.js';
 import { verifyToken } from '../middleware/verifyToken.js';
 import multer from 'multer';
 import path from 'path';
@@ -36,5 +36,8 @@ const upload = multer({
 router.post('/', verifyToken, upload.single('image'), createPost);
 router.get('/', verifyToken, getPosts);
 router.get('/:id', verifyToken, getPost);
+router.put('/:id', verifyToken, upload.single('image'), updatePost);
+router.post('/:id/comments', verifyToken, addComment);
+
 
 export default router;
