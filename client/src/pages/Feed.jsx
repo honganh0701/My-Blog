@@ -8,6 +8,7 @@ function Feed() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const API_URL = 'http://localhost:5000/';
 
     // Nếu chưa đăng nhập, redirect về trang login
     if (!isAuthenticated()) {
@@ -55,7 +56,7 @@ function Feed() {
                             {post.image && (
                                 <div className="mb-4">
                                     <img 
-                                        src={`${post.image}`}
+                                        src={`${API_URL}${post.image}`}
                                         alt={post.title}
                                         className="w-full h-48 object-cover rounded"
                                     />

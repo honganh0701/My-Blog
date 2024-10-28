@@ -8,7 +8,8 @@ export const createPost = async (req, res) => {
 
         // Xử lý file ảnh nếu có
         if (req.file) {
-            imageUrl = req.file.path; // Giả sử đã setup multer middleware
+            // Chỉ lưu tên file và thư mục, không lưu đường dẫn đầy đủ
+            imageUrl = 'uploads/' + req.file.filename; // Thay vì req.file.path
         }
 
         const newPost = new Post({

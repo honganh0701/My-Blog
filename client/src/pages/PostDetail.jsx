@@ -9,6 +9,7 @@ function PostDetail() {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const API_URL = 'http://localhost:5000/';
 
     if (!isAuthenticated()) {
         return <Navigate to="/login" />;
@@ -47,7 +48,7 @@ function PostDetail() {
                 {post.image && (
                     <div className="mb-6">
                         <img 
-                            src={`${post.image}`}
+                            src={`${import.meta.env.VITE_API_URL}/${post.image}`}
                             alt={post.title}
                             className="w-full max-h-96 object-cover rounded-lg"
                         />
