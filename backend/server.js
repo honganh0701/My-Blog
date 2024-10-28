@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';  // Phải thêm .js
 import authRoutes from './routes/authRoutes.js';
 import cors from 'cors';
+import postRoutes from './routes/postRoutes.js'
 
 // Load env vars
 dotenv.config();
@@ -28,6 +29,11 @@ app.use((req, res, next) => {
 }));
 
 app.use('/api/auth', authRoutes);
+// Thêm middleware để serve static files
+app.use('/images', express.static('public/images'));
+
+app.use('/api/posts', postRoutes);
+app.use('/uploads', express.static('uploads'));
 
 // Basic route
 app.get('/', (req, res) => {
@@ -42,5 +48,3 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-// Thêm middleware để serve static files
-app.use('/images', express.static('public/images'));

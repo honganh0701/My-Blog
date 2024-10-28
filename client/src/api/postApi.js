@@ -28,7 +28,7 @@ export const getPosts = async () => {
 };
  export const getPostById = async (id) => {
     try {
-        const response = await api.get(`/posts'/${id}`);
+        const response = await api.get(`/posts/${id}`);
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -37,13 +37,12 @@ export const getPosts = async () => {
 
  export const createPost = async (postData) => {
     try {
-        //formdata de gui file
         const formData = new FormData();
         Object.keys(postData).forEach(key => {
-            formdata.append(key, postData[key]);
+            formData.append(key, postData[key]);
         });
 
-        const response = await api.post('/post', formData, {
+        const response = await api.post('/posts', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -51,6 +50,13 @@ export const getPosts = async () => {
 
         return response.data;
     } catch (error) {
-        throw error.response.data;
+        console.error('Error creating post:', error);
+        if (error.response) {
+            throw error.response.data;
+        } else if (error.request) {
+            throw new Error('Không thể kết nối đến server');
+        } else {
+            throw new Error('Có lỗi xảy ra khi tạo bài viết');
+        }
     }
- };
+};
