@@ -11,7 +11,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white shadow-md relative z-50">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           {/* Left side - Logo/Brand */}
@@ -40,11 +40,11 @@ export default function Header() {
                 </button>
                 <div className="relative group">
                   <img
-                    src={auth.user?.profileImage || 'images/default-avatar.png'}
+                    src={auth?.profileImage || 'images/default-avatar.png'}
                     alt="Profile"
                     className="w-8 h-8 rounded-full cursor-pointer"
                   />
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 invisible group-hover:visible transition-all duration-300 z-50">
                     <Link
                       to="/profile"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
